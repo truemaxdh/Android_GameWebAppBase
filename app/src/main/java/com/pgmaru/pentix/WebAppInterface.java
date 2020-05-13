@@ -53,7 +53,8 @@ public class WebAppInterface {
         }
     }
 
-    /** Signin to google services */
+    /** Signin to google services from the web page */
+    @JavascriptInterface
     public void signInToGS() {
         // Create the client used to sign in to Google services.
         if (mMain.mGoogleSignInClient == null) {
@@ -77,4 +78,15 @@ public class WebAppInterface {
         mMain.showLeaderboard();
     }
 
+    /** Unlock Achievement from the web page */
+    @JavascriptInterface
+    public void unlockAchievement(String achievementId) {
+        mMain.mAchievementsClient.unlock(achievementId);
+    }
+
+    /** Submit Score from the web page */
+    @JavascriptInterface
+    public void submitScore(String leaderboardId, int score) {
+        mMain.mLeaderboardsClient.submitScore(leaderboardId, score);
+    }
 }

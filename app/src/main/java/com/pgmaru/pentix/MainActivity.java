@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient());
     }
 
+    /*
     // Back button activity
     public void onBackPressed() {
         if (webView.canGoBack()) {
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+    */
 
     private void onConnected(GoogleSignInAccount googleSignInAccount) {
         mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
