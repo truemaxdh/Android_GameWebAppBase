@@ -29,10 +29,11 @@ public class WebAppInterface {
 
     /** AdMob Init */
     @JavascriptInterface
-    public void adMobInit() {
+    public void adMobInit(String adUnitId) {
         initialize(mContext);
         mMain.mInterstitialAd = new InterstitialAd(mContext);
-        mMain.mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); // Test
+        mMain.mInterstitialAd.setAdUnitId(adUnitId);
+        // "ca-app-pub-3940256099942544/1033173712" : Test
         //ca-app-pub-7307479428475282~3962043059 : Real
 
     }
