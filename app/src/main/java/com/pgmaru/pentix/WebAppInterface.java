@@ -63,8 +63,8 @@ public class WebAppInterface {
                     new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build());
         }
 
-        if (GoogleSignIn.getLastSignedInAccount(mContext) == null)
-            mMain.startSignInIntent();
+        //if (GoogleSignIn.getLastSignedInAccount(mContext) == null)
+            //mMain.startSignInIntent();
     }
 
     /** Show achievements from the web page */

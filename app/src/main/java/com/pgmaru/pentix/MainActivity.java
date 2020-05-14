@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             displayName = "???";
                         }
-                        //Toast.makeText(getApplicationContext(), "Hello," + displayName, Toast.LENGTH_LONG).show();
+                        webAppInterface.showToast(displayName);
                     }
                 });
     }
@@ -99,18 +99,21 @@ public class MainActivity extends AppCompatActivity {
         mAchievementsClient = null;
         mLeaderboardsClient = null;
         mPlayersClient = null;
-        //Toast.makeText(this, "GoodBye!", Toast.LENGTH_LONG).show();
+
+        webAppInterface.showToast("GoodBye!!");
     }
 
     public void signInSilently() {
-        //Toast.makeText(this, "signInSilently", Toast.LENGTH_LONG).show();
+        webAppInterface.showToast("signInSilently");
         mGoogleSignInClient.silentSignIn().addOnCompleteListener((Executor) this,
                 new OnCompleteListener<GoogleSignInAccount>() {
                     @Override
                     public void onComplete(Task<GoogleSignInAccount> task) {
                         if (task.isSuccessful()) {
+                            webAppInterface.showToast("silentSignIn Success!!");
                             onConnected(task.getResult());
                         } else {
+                            webAppInterface.showToast("silentSignIn Failed!!");
                             onDisconnected();
                         }
                     }
@@ -122,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        webAppInterface.showToast("onResume!!");
         // Since the state of the signed in user can change when the activity is not active
         // it is recommended to try and sign in silently from when the app resumes.
         //Toast.makeText(this, "OnResume", Toast.LENGTH_LONG).show();
@@ -131,47 +135,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startSignInIntent() {
+        webAppInterface.showToast("startSignInIntent!!");
         startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
     }
 
     public void showAchievements() {
-        /*if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Toast.makeText(this, "The interstitial wasn't loaded yet.", Toast.LENGTH_LONG);
-        }*/
         mAchievementsClient.getAchievementsIntent()
             .addOnSuccessListener(new OnSuccessListener<Intent>() {
                 @Override
                 public void onSuccess(Intent intent) {
+                    webAppInterface.showToast("startActivityForResult!!");
                     startActivityForResult(intent, RC_UNUSED);
                 }
             })
             .addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(Exception e) {
-                    //Toast.makeText(getApplicationContext(), "Failed to get Achievements.", Toast.LENGTH_LONG);
+                    webAppInterface.showToast("getAchievementsIntent failed");
                 }
             });
     }
 
     public void showLeaderboard() {
-        /*if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Toast.makeText(this, "The interstitial wasn't loaded yet.", Toast.LENGTH_LONG);
-        }*/
         mLeaderboardsClient.getAllLeaderboardsIntent()
             .addOnSuccessListener(new OnSuccessListener<Intent>() {
                 @Override
                 public void onSuccess(Intent intent) {
+                    webAppInterface.showToast("startActivityForResult!!");
                     startActivityForResult(intent, RC_UNUSED);
                 }
             })
             .addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(Exception e) {
-                    //Toast.makeText(getApplicationContext(), "Failed to get Leaderboard.", Toast.LENGTH_LONG);
+                    webAppInterface.showToast("getAllLeaderboardsIntent failed");
                 }
             });
     }
