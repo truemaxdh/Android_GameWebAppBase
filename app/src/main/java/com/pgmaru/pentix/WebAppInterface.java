@@ -56,15 +56,36 @@ public class WebAppInterface {
 
     /** Signin to google services from the web page */
     @JavascriptInterface
-    public void signInToGS() {
+    public void GoogleSignIn_getClient() {
         // Create the client used to sign in to Google services.
         if (mMain.mGoogleSignInClient == null) {
+            showToast("GoogleSignIn.getClient");
             mMain.mGoogleSignInClient = GoogleSignIn.getClient(mContext,
                     new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build());
         }
+    }
 
+    /** Signin to google services from the web page */
+    @JavascriptInterface
+    public void signInToGS() {
         //if (GoogleSignIn.getLastSignedInAccount(mContext) == null)
-            //mMain.startSignInIntent();
+        showToast("startSignInIntent");
+        mMain.startSignInIntent();
+    }
+
+    /** Signin to google services from the web page */
+    @JavascriptInterface
+    public void signInSilently() {
+        showToast("signInSilently");
+        mMain.signInSilently();
+    }
+
+    /** Signin to google services from the web page */
+    @JavascriptInterface
+    public String getLastSignedInAccount() {
+        String dispName = GoogleSignIn.getLastSignedInAccount(mContext).getDisplayName();
+        showToast(dispName);
+        return dispName;
     }
 
     /** Show achievements from the web page */
