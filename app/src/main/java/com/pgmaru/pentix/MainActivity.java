@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void signInSilently() {
         webAppInterface.showToast("signInSilently");
-        mGoogleSignInClient.silentSignIn().addOnCompleteListener((Executor) this,
+        mGoogleSignInClient.silentSignIn().addOnCompleteListener(/*(Executor)*/ this,
                 new OnCompleteListener<GoogleSignInAccount>() {
                     @Override
                     public void onComplete(Task<GoogleSignInAccount> task) {
