@@ -73,6 +73,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     */
+  
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    super.onActivityResult(requestCode, resultCode, intent);
+    if (requestCode == RC_SIGN_IN) {
+      Task<GoogleSignInAccount> task =
+          GoogleSignIn.getSignedInAccountFromIntent(intent);
+
+      try {
+        GoogleSignInAccount account = task.getResult(ApiException.class);
+        onConnected(account);
+      } catch (ApiException apiException) {
+        String message = apiException.getMessage();
+        if (message == null || message.isEmpty()) {
+          message = "other_error";
+        }
+
+        onDisconnected();
+
+        new AlertDialog.Builder(this)
+            .setMessage(message)
+            .setNeutralButton("OK", null)
+            .show();
+      }
+    }
+  }
 
     private void onConnected(GoogleSignInAccount googleSignInAccount) {
         mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
