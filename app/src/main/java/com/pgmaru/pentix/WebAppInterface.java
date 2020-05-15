@@ -34,7 +34,7 @@ public class WebAppInterface {
         mMain.mInterstitialAd = new InterstitialAd(mContext);
         mMain.mInterstitialAd.setAdUnitId(adUnitId);
         // "ca-app-pub-3940256099942544/1033173712" : Test
-        //ca-app-pub-7307479428475282~3962043059 : Real
+        //ca-app-pub-7307479428475282/1949829859 : Real
 
     }
 
