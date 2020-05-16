@@ -58,7 +58,7 @@ public class WebAppInterface {
     public void GoogleSignIn_getClient() {
         // Create the client used to sign in to Google services.
         if (mMain.mGoogleSignInClient == null) {
-            showToast("GoogleSignIn.getClient");
+            //showToast("GoogleSignIn.getClient");
             mMain.mGoogleSignInClient = GoogleSignIn.getClient(mContext,
                     new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build());
         }
@@ -67,15 +67,14 @@ public class WebAppInterface {
     /** Signin to google services from the web page */
     @JavascriptInterface
     public void signInToGS() {
-        //if (GoogleSignIn.getLastSignedInAccount(mContext) == null)
-        showToast("startSignInIntent");
+        //showToast("startSignInIntent");
         mMain.startSignInIntent();
     }
 
     /** Signin to google services from the web page */
     @JavascriptInterface
     public void signInSilently() {
-        showToast("signInSilently");
+        //showToast("signInSilently");
         mMain.signInSilently();
     }
 
@@ -83,7 +82,7 @@ public class WebAppInterface {
     @JavascriptInterface
     public String getLastSignedInAccount() {
         String dispName = GoogleSignIn.getLastSignedInAccount(mContext).getDisplayName();
-        showToast(dispName);
+        //showToast(dispName);
         return dispName;
     }
 
