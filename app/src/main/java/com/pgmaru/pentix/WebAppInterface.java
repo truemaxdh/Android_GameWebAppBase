@@ -29,13 +29,24 @@ public class WebAppInterface {
 
     /** AdMob Init */
     @JavascriptInterface
-    public void adMobInit(String adUnitId_interstitial, String adUnitId_banner) {
-        initialize(mContext);
+    public void adMobInit(String useJSCallbackYN) {
+        if (useJSCallbackYN.equals("Y")) {
+            initialize(mContext, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                    mMain.webView.loadUrl("javascript:AdMob.onInitComplete();");
+                }
+            });
+        } else {
+            initialize(mContext);
+        }        
+    }
+    
+    /** AdMob Init IntertitialAd */
+    @JavascriptInterface
+    public void adMobInitIntertitial(String adUnitId) {
         mMain.mInterstitialAd = new InterstitialAd(mContext);
-        mMain.mInterstitialAd.setAdUnitId(adUnitId_interstitial);
-        // "ca-app-pub-3940256099942544/1033173712" : Test
-        //ca-app-pub-7307479428475282/1949829859 : Real
-
+        mMain.mInterstitialAd.setAdUnitId(adUnitId);
     }
 
     /** AdMob Load InterstitialAd */
@@ -54,6 +65,42 @@ public class WebAppInterface {
         }
     }
 
+    /** AdMob Set Callbacks of InterstitialAd */
+    @JavascriptInterface
+    public void adMobIntertitialSetToUseJSCallback() {
+        mMain.mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdLoaded();");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdFailedToLoad();");
+            }
+
+            @Override
+            public void onAdOpened() {
+                mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdOpened();");
+            }
+
+            @Override
+            public void onAdClicked() {
+                mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdClicked();");
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdLeftApplication();");
+            }
+
+            @Override
+            public void onAdClosed() {
+                mMain.webView.loadUrl("javascript:AdMobInterstitial.onAdClosed();");
+            }
+        });
+    }
+    
     /** Signin to google services from the web page */
     @JavascriptInterface
     public void GoogleSignIn_getClient() {
