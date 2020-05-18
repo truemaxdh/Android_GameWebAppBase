@@ -64,17 +64,16 @@ public class MainActivity extends AppCompatActivity {
     webView.setWebViewClient(new WebViewClient());
   }
 
-  /*
   // Back button activity
   public void onBackPressed() {
-    if (webView.canGoBack()) {
-        webView.goBack();
-    } else {
-        super.onBackPressed();
+    try {
+      webAppInterface.showSubMenu();
+    } catch(Exception e) {
+      super.onBackPressed();
     }
+
   }
-  */
-  
+
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
     super.onActivityResult(requestCode, resultCode, intent);

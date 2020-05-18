@@ -4,8 +4,11 @@ import android.content.Context;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
@@ -157,4 +160,16 @@ public class WebAppInterface {
     public void submitScore(String leaderboardId, int score) {
         mMain.mLeaderboardsClient.submitScore(leaderboardId, score);
     }
+
+    /** Exit app from the web page */
+    @JavascriptInterface
+    public void exitApp(String leaderboardId, int score) {
+        mMain.finish();
+    }
+
+    public void showSubMenu() {
+        mMain.webView.loadUrl("javascript:showSubMenu();");
+    }
+
+
 }
