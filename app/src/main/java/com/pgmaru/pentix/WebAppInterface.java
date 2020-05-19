@@ -99,7 +99,7 @@ public class WebAppInterface {
 
             @Override
             public void onAdClosed() {
-                mMain.webView.loadUrl("javascript:AdMobInterstitial.onAdClosed();");
+                mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdClosed();");
             }
         });
     }
