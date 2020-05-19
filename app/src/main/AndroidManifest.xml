@@ -18,7 +18,10 @@
             android:value="@integer/google_play_services_version"/>
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7307479428475282~7899681601"/>
+            android:value="2389793441"/>
+        <!--meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+        android:value="ca-app-pub-7307479428475282~7899681601"/-->
 
         <activity android:name=".MainActivity">
             <intent-filter>

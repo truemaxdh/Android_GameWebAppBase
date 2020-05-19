@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
           } else {
             displayName = "???";
           }
-          //webAppInterface.showToast("Hello, " + displayName);
         }
       });
   }
@@ -130,16 +129,13 @@ public class MainActivity extends AppCompatActivity {
   }
 
   public void signInSilently() {
-    //webAppInterface.showToast("signInSilently");
-    mGoogleSignInClient.silentSignIn().addOnCompleteListener(/*(Executor)*/ this,
+    mGoogleSignInClient.silentSignIn().addOnCompleteListener(this,
       new OnCompleteListener<GoogleSignInAccount>() {
         @Override
         public void onComplete(Task<GoogleSignInAccount> task) {
           if (task.isSuccessful()) {
-            //webAppInterface.showToast("silentSignIn Success!!");
             onConnected(task.getResult());
           } else {
-            //webAppInterface.showToast("silentSignIn Failed!!");
             onDisconnected();
           }
         }
@@ -154,14 +150,12 @@ public class MainActivity extends AppCompatActivity {
     ///webAppInterface.showToast("onResume!!");
     // Since the state of the signed in user can change when the activity is not active
     // it is recommended to try and sign in silently from when the app resumes.
-    //Toast.makeText(this, "OnResume", Toast.LENGTH_LONG).show();
     if (mGoogleSignInClient != null) {
       signInSilently();
     }
   }
 
   public void startSignInIntent() {
-    //webAppInterface.showToast("startSignInIntent!!");
     startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
   }
 
@@ -170,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
       .addOnSuccessListener(new OnSuccessListener<Intent>() {
         @Override
         public void onSuccess(Intent intent) {
-          //webAppInterface.showToast("startActivityForResult!!");
           startActivityForResult(intent, RC_UNUSED);
         }
       })
@@ -187,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
       .addOnSuccessListener(new OnSuccessListener<Intent>() {
         @Override
         public void onSuccess(Intent intent) {
-          //webAppInterface.showToast("startActivityForResult!!");
           startActivityForResult(intent, RC_UNUSED);
         }
       })
