@@ -125,7 +125,7 @@ public class WebAppInterface {
             public void onAdClosed() {
                 mMain.webView.post(new Runnable() {
                     public void run() {
-                        mMain.webView.loadUrl("javascript:AdMobInterstitial.onAdClosed();");
+                        mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdClosed();");
                     }
                 });
 
