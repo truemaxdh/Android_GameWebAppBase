@@ -80,65 +80,67 @@ public class WebAppInterface {
     @JavascriptInterface
     public void adMobIntertitialSetToUseJSCallback() {
         try {
-            mMain.mInterstitialAd.setAdListener(new AdListener() {
-                @Override
-                public void onAdLoaded() {
-                    mMain.webView.post(new Runnable() {
-                        public void run() {
-                            mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdLoaded();");
-                        }
-                    });
-                }
+            mMain.webView.post(new Runnable() {
+                mMain.mInterstitialAd.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdLoaded() {
+                        mMain.webView.post(new Runnable() {
+                            public void run() {
+                                mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdLoaded();");
+                            }
+                        });
+                    }
 
-                @Override
-                public void onAdFailedToLoad(int errorCode) {
-                    mMain.webView.post(new Runnable() {
-                        public void run() {
-                            mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdFailedToLoad();");
-                        }
-                    });
+                    @Override
+                    public void onAdFailedToLoad(int errorCode) {
+                        mMain.webView.post(new Runnable() {
+                            public void run() {
+                                mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdFailedToLoad();");
+                            }
+                        });
 
-                }
+                    }
 
-                @Override
-                public void onAdOpened() {
-                    mMain.webView.post(new Runnable() {
-                        public void run() {
-                            mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdOpened();");
-                        }
-                    });
+                    @Override
+                    public void onAdOpened() {
+                        mMain.webView.post(new Runnable() {
+                            public void run() {
+                                mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdOpened();");
+                            }
+                        });
 
-                }
+                    }
 
-                @Override
-                public void onAdClicked() {
-                    mMain.webView.post(new Runnable() {
-                        public void run() {
-                            mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdClicked();");
-                        }
-                    });
+                    @Override
+                    public void onAdClicked() {
+                        mMain.webView.post(new Runnable() {
+                            public void run() {
+                                mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdClicked();");
+                            }
+                        });
 
-                }
+                    }
 
-                @Override
-                public void onAdLeftApplication() {
-                    mMain.webView.post(new Runnable() {
-                        public void run() {
-                            mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdLeftApplication();");
-                        }
-                    });
+                    @Override
+                    public void onAdLeftApplication() {
+                        mMain.webView.post(new Runnable() {
+                            public void run() {
+                                mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdLeftApplication();");
+                            }
+                        });
 
-                }
+                    }
 
-                @Override
-                public void onAdClosed() {
-                    mMain.webView.post(new Runnable() {
-                        public void run() {
-                            mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdClosed();");
-                        }
-                    });
+                    @Override
+                    public void onAdClosed() {
+                        mMain.webView.post(new Runnable() {
+                            public void run() {
+                                mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdClosed();");
+                            }
+                        });
 
-                }
+                    }
+                });
             });
         } catch (Exception e) {
             showToast(e.toString());
