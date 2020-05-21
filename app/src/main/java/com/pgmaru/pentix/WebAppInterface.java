@@ -69,10 +69,14 @@ public class WebAppInterface {
     /** AdMob Show InterstitialAd */
     @JavascriptInterface
     public void adMobInterstitialShow() {
-        if (mMain.mInterstitialAd.isLoaded()) {
-            mMain.mInterstitialAd.show();
-        } else {
-            showToast("The interstitial wasn't loaded yet.");
+        try {
+            if (mMain.mInterstitialAd.isLoaded()) {
+                mMain.mInterstitialAd.show();
+            } else {
+                showToast("The interstitial wasn't loaded yet.");
+            }
+        } catch(Exception e) {
+            showToast(e.toString());
         }
     }
 
