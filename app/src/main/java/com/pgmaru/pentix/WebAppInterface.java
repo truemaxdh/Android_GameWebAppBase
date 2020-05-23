@@ -32,22 +32,26 @@ public class WebAppInterface {
 
     /** AdMob Init */
     @JavascriptInterface
-    public void adMobInit(String adMobAppId, String useJSCallbackYN) {
-        if (useJSCallbackYN.equals("Y")) {
-            initialize(mContext, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                    mMain.webView.loadUrl("javascript:AdMob.onInitComplete();");
-                }
-            });
-        } else {
-            initialize(mContext, adMobAppId);
-        }        
+    public void adMobInit(String useJSCallbackYN) {
+        try {
+            if (useJSCallbackYN.equals("Y")) {
+                initialize(mContext, new OnInitializationCompleteListener() {
+                    @Override
+                    public void onInitializationComplete(InitializationStatus initializationStatus) {
+                        mMain.webView.loadUrl("javascript:AdMob.onInitComplete();");
+                    }
+                });
+            } else {
+                initialize(mContext);
+            }
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
     }
     
-    /** AdMob Init IntertitialAd */
+    /** AdMob Init InterstitialAd */
     @JavascriptInterface
-    public void adMobInitIntertitial(String adUnitId) {
+    public void adMobInitInterstitial(String adUnitId) {
         try {
             mMain.mInterstitialAd = new InterstitialAd(mContext);
             mMain.mInterstitialAd.setAdUnitId(adUnitId);
@@ -60,7 +64,12 @@ public class WebAppInterface {
     @JavascriptInterface
     public void adMobInterstitialLoad() {
         try {
-            mMain.mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            mMain.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mMain.mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                }
+            });
         } catch(Exception e) {
             showToast(e.toString());
         }
@@ -73,11 +82,11 @@ public class WebAppInterface {
             mMain.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (mMain.mInterstitialAd.isLoaded()) {
-                        mMain.mInterstitialAd.show();
-                    } else {
-                        showToast("The interstitial wasn't loaded yet.");
-                    }
+                if (mMain.mInterstitialAd.isLoaded()) {
+                    mMain.mInterstitialAd.show();
+                } else {
+                    //showToast("The interstitial wasn't loaded yet.");
+                }
                 }
             });
         } catch(Exception e) {
@@ -87,10 +96,10 @@ public class WebAppInterface {
 
     /** AdMob Set Callbacks of InterstitialAd */
     @JavascriptInterface
-    public void adMobIntertitialSetToUseJSCallback() {
+    public void adMobInterstitialSetToUseJSCallback() {
         try {
             mMain.runOnUiThread(new Runnable() {
-                @Override
+                 @Override
                 public void run() {
                     mMain.mInterstitialAd.setAdListener(new AdListener() {
                         @Override
@@ -133,29 +142,44 @@ public class WebAppInterface {
     /** Signin to google services from the web page */
     @JavascriptInterface
     public void GoogleSignIn_getClient() {
-        // Create the client used to sign in to Google services.
-        if (mMain.mGoogleSignInClient == null) {
-            //showToast("GoogleSignIn.getClient");
-            mMain.mGoogleSignInClient = GoogleSignIn.getClient(mContext,
-                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build());
+        try {
+            // Create the client used to sign in to Google services.
+            if (mMain.mGoogleSignInClient == null) {
+                //showToast("GoogleSignIn.getClient");
+                mMain.mGoogleSignInClient = GoogleSignIn.getClient(mContext,
+                        new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build());
+            }
+        } catch (Exception e) {
+            showToast(e.toString());
         }
     }
 
     /** Signin to google services from the web page */
     @JavascriptInterface
     public void signInToGS() {
-        //showToast("startSignInIntent");
-        mMain.startSignInIntent();
+        try {
+            mMain.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mMain.startSignInIntent();
+                }
+            });
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
     }
 
     /** Signin to google services from the web page */
     @JavascriptInterface
     public void signInSilently() {
-        //showToast("signInSilently");
-        mMain.signInSilently();
+        try {
+            mMain.signInSilently();
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
     }
 
-    /** Signin to google services from the web page */
+    /** get Last SignedIn Account to google services from the web page */
     @JavascriptInterface
     public String getLastSignedInAccount() {
         String dispName = GoogleSignIn.getLastSignedInAccount(mContext).getDisplayName();
@@ -166,35 +190,69 @@ public class WebAppInterface {
     /** Show achievements from the web page */
     @JavascriptInterface
     public void showAchievements() {
-        mMain.showAchievements();
+        try {
+            mMain.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mMain.showAchievements();
+                }
+            });
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
     }
 
     /** Show leaderboard from the web page */
     @JavascriptInterface
     public void showLeaderboard() {
-        mMain.showLeaderboard();
+        try {
+            mMain.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mMain.showLeaderboard();
+                }
+            });
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
     }
 
     /** Unlock Achievement from the web page */
     @JavascriptInterface
     public void unlockAchievement(String achievementId) {
-        mMain.mAchievementsClient.unlock(achievementId);
+        try {
+            mMain.mAchievementsClient.unlock(achievementId);
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
     }
 
     /** Submit Score from the web page */
     @JavascriptInterface
     public void submitScore(String leaderboardId, int score) {
-        mMain.mLeaderboardsClient.submitScore(leaderboardId, score);
+        try {
+            mMain.mLeaderboardsClient.submitScore(leaderboardId, score);
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
     }
 
     /** Exit app from the web page */
     @JavascriptInterface
-    public void exitApp(String leaderboardId, int score) {
-        mMain.finish();
+    public void exitApp() {
+        try {
+            mMain.finish();
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
     }
 
     public void showSubMenu() {
-        mMain.webView.loadUrl("javascript:showSubMenu();");
+        try {
+            mMain.webView.loadUrl("javascript:showSubMenu();");
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
     }
 
 
