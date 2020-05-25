@@ -18,9 +18,8 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.games.AchievementsClient;
 import com.google.android.gms.games.EventsClient;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.GamesClient;
 import com.google.android.gms.games.LeaderboardsClient;
-import com.google.android.gms.games.Player;
-import com.google.android.gms.games.PlayersClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
   public AchievementsClient mAchievementsClient;
   public LeaderboardsClient mLeaderboardsClient;
   public EventsClient mEventsClient;
-  public PlayersClient mPlayersClient;
+  //public PlayersClient mPlayersClient;
+  public GamesClient mGamesClient;
+
 
   public String displayName;
 
@@ -104,10 +105,13 @@ public class MainActivity extends AppCompatActivity {
     mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
     mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
     mEventsClient = Games.getEventsClient(this, googleSignInAccount);
-    mPlayersClient = Games.getPlayersClient(this, googleSignInAccount);
+    //mPlayersClient = Games.getPlayersClient(this, googleSignInAccount);
+    mGamesClient = Games.getGamesClient(this, googleSignInAccount);
+
+    mGamesClient.setViewForPopups(webView);
 
     // Set the greeting appropriately on main menu
-    mPlayersClient.getCurrentPlayer()
+    /*mPlayersClient.getCurrentPlayer()
       .addOnCompleteListener(new OnCompleteListener<Player>() {
         @Override
         public void onComplete(Task<Player> task) {
@@ -117,13 +121,14 @@ public class MainActivity extends AppCompatActivity {
             displayName = "???";
           }
         }
-      });
+      });*/
   }
 
   private void onDisconnected() {
     mAchievementsClient = null;
     mLeaderboardsClient = null;
-    mPlayersClient = null;
+    //mPlayersClient = null;
+    mGamesClient = null;
 
     webAppInterface.showToast("Not Signed in with google.");
   }
