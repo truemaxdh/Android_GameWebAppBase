@@ -10,6 +10,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import static com.google.android.gms.ads.MobileAds.initialize;
@@ -182,7 +183,14 @@ public class WebAppInterface {
     /** get Last SignedIn Account to google services from the web page */
     @JavascriptInterface
     public String getLastSignedInAccount() {
-        String dispName = GoogleSignIn.getLastSignedInAccount(mContext).getDisplayName();
+        String dispName = "";
+        try {
+            GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(mContext);
+            if (gsa != null)
+                dispName = gsa.getDisplayName();
+        } catch(Exception e) {
+            showToast(e.toString());
+        }
         //showToast(dispName);
         return dispName;
     }
