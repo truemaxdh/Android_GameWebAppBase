@@ -39,9 +39,7 @@ public class MainActivity extends AppCompatActivity {
   //public PlayersClient mPlayersClient;
   public GamesClient mGamesClient;
 
-
-  public String displayName;
-
+  
   private static final int RC_UNUSED = 5001;
   private static final int RC_SIGN_IN = 9001;
 
@@ -110,18 +108,20 @@ public class MainActivity extends AppCompatActivity {
 
     mGamesClient.setViewForPopups(webView);
 
-    // Set the greeting appropriately on main menu
-    /*mPlayersClient.getCurrentPlayer()
+    // Set the greeting
+    mPlayersClient.getCurrentPlayer()
       .addOnCompleteListener(new OnCompleteListener<Player>() {
         @Override
         public void onComplete(Task<Player> task) {
+          String dispName;
           if (task.isSuccessful()) {
-            displayName = task.getResult().getDisplayName();
+            dispName = task.getResult().getDisplayName();
           } else {
-            displayName = "???";
+            dispName = "unknown";
           }
+          webAppInterface.jscallback_profile("connected",dispName);
         }
-      });*/
+      });
   }
 
   private void onDisconnected() {
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     //mPlayersClient = null;
     mGamesClient = null;
 
-    webAppInterface.showToast("Not Signed in with google.");
+    webAppInterface.jscallback_profile("disconnected",dispName)
   }
 
   public void signInSilently() {
@@ -180,8 +180,8 @@ public class MainActivity extends AppCompatActivity {
       });
   }
 
-  public void showLeaderboard() {
-    mLeaderboardsClient.getAllLeaderboardsIntent()
+  public void showLeaderboard(String leaderboardId) {
+    mLeaderboardsClient.getLeaderboardsIntent(leaderboardId)
       .addOnSuccessListener(new OnSuccessListener<Intent>() {
         @Override
         public void onSuccess(Intent intent) {
