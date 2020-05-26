@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
           } else {
             dispName = "unknown";
           }
-          webAppInterface.jscallback_profile("connected",dispName);
+          webAppInterface.jscallback_gamerProfile("connected",dispName);
         }
       });
   }
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     //mPlayersClient = null;
     mGamesClient = null;
 
-    webAppInterface.jscallback_profile("disconnected",dispName)
+    webAppInterface.jscallback_gamerProfile("disconnected","");
   }
 
   public void signInSilently() {
