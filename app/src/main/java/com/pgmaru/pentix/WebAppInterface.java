@@ -212,7 +212,7 @@ public class WebAppInterface {
 
     /** Show leaderboard from the web page */
     @JavascriptInterface
-    public void showLeaderboard() {
+    public void showLeaderboard(String leaderboardId) {
         try {
             mMain.runOnUiThread(new Runnable() {
                 @Override
@@ -263,5 +263,12 @@ public class WebAppInterface {
         }
     }
 
+    public void jscallback_gamerProfile(String isConnected, String dispName) {
+        try {
+            mMain.webView.loadUrl("javascript:setGamerProfile('" + isConnected + "', '" + dispName + "');");
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
+    }
 
 }
