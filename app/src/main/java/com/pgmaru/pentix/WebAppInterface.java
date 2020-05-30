@@ -214,10 +214,11 @@ public class WebAppInterface {
     @JavascriptInterface
     public void showLeaderboard(String leaderboardId) {
         try {
+            mMain.mLeaderboardId = leaderboardId;
             mMain.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mMain.showLeaderboard();
+                    mMain.showLeaderboard(mMain.mLeaderboardId);
                 }
             });
         } catch (Exception e) {

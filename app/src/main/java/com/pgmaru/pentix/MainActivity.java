@@ -20,6 +20,8 @@ import com.google.android.gms.games.EventsClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.GamesClient;
 import com.google.android.gms.games.LeaderboardsClient;
+import com.google.android.gms.games.Player;
+import com.google.android.gms.games.PlayersClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
   public AchievementsClient mAchievementsClient;
   public LeaderboardsClient mLeaderboardsClient;
   public EventsClient mEventsClient;
-  //public PlayersClient mPlayersClient;
+  public PlayersClient mPlayersClient;
   public GamesClient mGamesClient;
 
   
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
   private static final int RC_SIGN_IN = 9001;
 
   public InterstitialAd mInterstitialAd;
+
+  public String mLeaderboardId;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     mAchievementsClient = Games.getAchievementsClient(this, googleSignInAccount);
     mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
     mEventsClient = Games.getEventsClient(this, googleSignInAccount);
-    //mPlayersClient = Games.getPlayersClient(this, googleSignInAccount);
+    mPlayersClient = Games.getPlayersClient(this, googleSignInAccount);
     mGamesClient = Games.getGamesClient(this, googleSignInAccount);
 
     mGamesClient.setViewForPopups(webView);
@@ -127,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
   private void onDisconnected() {
     mAchievementsClient = null;
     mLeaderboardsClient = null;
-    //mPlayersClient = null;
+    mPlayersClient = null;
     mGamesClient = null;
 
     webAppInterface.jscallback_gamerProfile("disconnected","");
@@ -181,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   public void showLeaderboard(String leaderboardId) {
-    mLeaderboardsClient.getLeaderboardsIntent(leaderboardId)
+    mLeaderboardsClient.getLeaderboardIntent(leaderboardId)
       .addOnSuccessListener(new OnSuccessListener<Intent>() {
         @Override
         public void onSuccess(Intent intent) {
