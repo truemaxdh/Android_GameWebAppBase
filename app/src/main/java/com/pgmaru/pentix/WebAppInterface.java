@@ -140,6 +140,12 @@ public class WebAppInterface {
         }
     }
     
+    /** AdMob Create and show banner */
+    @JavascriptInterface
+    public void adMobInitAndShowBanner(String adUnitId) {
+        mMain.createAdmobBanner(adUnitId);
+    }
+    
     /** Signin to google services from the web page */
     @JavascriptInterface
     public void GoogleSignIn_getClient() {
