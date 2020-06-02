@@ -67,6 +67,24 @@ public class MainActivity extends AppCompatActivity {
     webView.setWebViewClient(new WebViewClient());
   }
 
+  // Create AdMob Banner View
+  public void createAdmobBanner(String adUnitId) {
+    AdView adView = new AdView(this);
+    adView.setAdSize(AdSize.BANNER);
+    adView.setAdUnitId(adUnitId);
+    
+    RelativeLayout adLayout = (RelativeLayout) activity.findViewById(R.id.footer);
+    RelativeLayout.LayoutParams params =  new RelativeLayout
+            .LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+    params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+     
+    adView.setLayoutParams(params);
+    adLayout.addView(adView);
+    AdRequest adRequest = new AdRequest.Builder().build();
+    adView.loadAd(adRequest);
+  }
+  
   // Back button activity
   public void onBackPressed() {
     try {
