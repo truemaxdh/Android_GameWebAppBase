@@ -10,6 +10,9 @@ import android.webkit.WebViewClient;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -68,19 +71,10 @@ public class MainActivity extends AppCompatActivity {
   }
 
   // Create AdMob Banner View
-  public void createAdmobBanner(String adUnitId) {
-    AdView adView = new AdView(this);
+  public void initAdmobBanner(String adUnitId) {
+    AdView adView = (AdView)findViewById(R.id.adView);
     adView.setAdSize(AdSize.BANNER);
     adView.setAdUnitId(adUnitId);
-    
-    RelativeLayout adLayout = (RelativeLayout) activity.findViewById(R.id.footer);
-    RelativeLayout.LayoutParams params =  new RelativeLayout
-            .LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-    params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-    params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-     
-    adView.setLayoutParams(params);
-    adLayout.addView(adView);
     AdRequest adRequest = new AdRequest.Builder().build();
     adView.loadAd(adRequest);
   }
