@@ -32,6 +32,8 @@ import com.google.android.gms.tasks.Task;
 
 public class MainActivity extends AppCompatActivity {
   public WebView webView;
+  public String mAchievementId;
+  public int mScore;
   WebAppInterface webAppInterface;
 
   // Client used to sign in with Google APIs
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
   public InterstitialAd mInterstitialAd;
 
   public String mLeaderboardId;
+  public String mAdUnitId;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
   }
 
   // Create AdMob Banner View
-  public void initAdmobBanner(String adUnitId) {
+  public void initAdmobBanner() {
     AdView adView = (AdView)findViewById(R.id.adView);
     adView.setAdSize(AdSize.BANNER);
-    adView.setAdUnitId(adUnitId);
+    adView.setAdUnitId(mAdUnitId);
     AdRequest adRequest = new AdRequest.Builder().build();
     adView.loadAd(adRequest);
   }

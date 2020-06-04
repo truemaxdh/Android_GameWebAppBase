@@ -144,10 +144,11 @@ public class WebAppInterface {
     @JavascriptInterface
     public void adMobInitBanner(String adUnitId) {
         try {
+            mMain.mAdUnitId = adUnitId;
             mMain.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mMain.initAdmobBanner(adUnitId);
+                    mMain.initAdmobBanner();
                 }
             });
         } catch(Exception e) {
@@ -189,7 +190,12 @@ public class WebAppInterface {
     @JavascriptInterface
     public void signInSilently() {
         try {
-            mMain.signInSilently();
+            mMain.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mMain.signInSilently();
+                }
+            });
         } catch (Exception e) {
             showToast(e.toString());
         }
@@ -245,7 +251,13 @@ public class WebAppInterface {
     @JavascriptInterface
     public void unlockAchievement(String achievementId) {
         try {
-            mMain.mAchievementsClient.unlock(achievementId);
+            mMain.mAchievementId = achievementId;
+            mMain.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mMain.mAchievementsClient.unlock(mMain.mAchievementId);
+                }
+            });
         } catch (Exception e) {
             showToast(e.toString());
         }
@@ -255,7 +267,14 @@ public class WebAppInterface {
     @JavascriptInterface
     public void submitScore(String leaderboardId, int score) {
         try {
-            mMain.mLeaderboardsClient.submitScore(leaderboardId, score);
+            mMain.mLeaderboardId = leaderboardId;
+            mMain.mScore = score;
+            mMain.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mMain.mLeaderboardsClient.submitScore(mMain.mLeaderboardId, mMain.mScore);
+                }
+            });
         } catch (Exception e) {
             showToast(e.toString());
         }
