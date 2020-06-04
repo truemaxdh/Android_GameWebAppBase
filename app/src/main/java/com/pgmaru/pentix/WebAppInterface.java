@@ -143,7 +143,16 @@ public class WebAppInterface {
     /** AdMob Create and show banner */
     @JavascriptInterface
     public void adMobInitBanner(String adUnitId) {
-        mMain.initAdmobBanner(adUnitId);
+        try {
+            mMain.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mMain.initAdmobBanner(adUnitId);
+                }
+            });
+        } catch(Exception e) {
+            showToast(e.toString());
+        }
     }
     
     /** Signin to google services from the web page */
