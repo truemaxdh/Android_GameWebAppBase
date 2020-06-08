@@ -4,12 +4,23 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
-    defaultConfig {
+    /*defaultConfig {
         applicationId "com.pgmaru.pentix"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 10024
         versionName "1.0.24"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }*/
+
+    defaultConfig {
+        applicationId "com.pgmaru.doodleflight"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 10001
+        versionName "1.0.01"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true

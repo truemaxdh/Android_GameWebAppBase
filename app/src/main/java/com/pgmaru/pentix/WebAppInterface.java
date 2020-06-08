@@ -142,9 +142,8 @@ public class WebAppInterface {
     
     /** AdMob Create and show banner */
     @JavascriptInterface
-    public void adMobInitBanner(String adUnitId) {
+    public void adMobInitBanner() {
         try {
-            mMain.mAdUnitId = adUnitId;
             mMain.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

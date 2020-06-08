@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     webView.addJavascriptInterface(webAppInterface, "Android");
 
     // url
-    webView.loadUrl("https://truemaxdh.github.io/EnjoyCoding/game_pentix/www/");
+    webView.loadUrl(getString(R.string.http_url));
     webView.setWebViewClient(new WebViewClient());
   }
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
   public void initAdmobBanner() {
     AdView adView = (AdView)findViewById(R.id.adView);
     adView.setAdSize(AdSize.BANNER);
-    adView.setAdUnitId(mAdUnitId);
+    //adView.setAdUnitId(mAdUnitId);
     AdRequest adRequest = new AdRequest.Builder().build();
     adView.loadAd(adRequest);
   }
