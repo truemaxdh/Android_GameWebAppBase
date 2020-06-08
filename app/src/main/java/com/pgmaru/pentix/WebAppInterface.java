@@ -147,7 +147,11 @@ public class WebAppInterface {
             mMain.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mMain.initAdmobBanner();
+                    try {
+                        mMain.initAdmobBanner();
+                    } catch(Exception e) {
+                        showToast(e.toString());
+                    }
                 }
             });
         } catch(Exception e) {
