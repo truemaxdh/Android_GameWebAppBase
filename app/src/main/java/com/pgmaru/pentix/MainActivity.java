@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
   // Create AdMob Banner View
   public void initAdmobBanner() {
     AdView adView = (AdView)findViewById(R.id.adView);
-    adView.setAdSize(AdSize.BANNER);
+    //adView.setAdSize(AdSize.BANNER);
     //adView.setAdUnitId(mAdUnitId);
     AdRequest adRequest = new AdRequest.Builder().build();
     adView.loadAd(adRequest);
