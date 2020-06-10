@@ -1,4 +1,4 @@
-package com.pgmaru.pentix;
+package com.pgmaru.common;
 
 import android.content.Context;
 import android.webkit.JavascriptInterface;

@@ -1,4 +1,4 @@
-package com.pgmaru.pentix;
+package com.pgmaru.common;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
   public InterstitialAd mInterstitialAd;
 
   public String mLeaderboardId;
-  public String mAdUnitId;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

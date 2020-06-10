@@ -1,21 +1,21 @@
 <!-- Crayon Pentix -->
-<resources>
+<!--<resources>
     <string name="app_name">CrayonPentix</string>
     <string name="app_id" translatable="false">816297656629</string>
     <string name="admob_app_id">ca-app-pub-7307479428475282~7899681601</string>
     <string name="http_url">https://truemaxdh.github.io/EnjoyCoding/game_pentix/www/</string>
     <string name="admob_banner_unit_id">ca-app-pub-7307479428475282/6870451218</string>
-</resources>
+</resources>-->
 
 
 <!-- Doodle Flight -->
-<!--<resources>
+<resources>
 <string name="app_name">DoodleFlight</string>
 <string name="app_id" translatable="false">64860208704</string>
 <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
 <string name="http_url">https://truemaxdh.github.io/EnjoyCoding/game_shooting/www/</string>
 <string name="admob_banner_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-</resources>-->
+</resources>
 
 
 
