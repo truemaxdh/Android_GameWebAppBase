@@ -223,12 +223,7 @@ public class WebAppInterface {
     @JavascriptInterface
     public void showAchievements() {
         try {
-            mMain.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mMain.showAchievements();
-                }
-            });
+            mMain.showAchievements();
         } catch (Exception e) {
             showToast(e.toString());
         }
@@ -239,12 +234,7 @@ public class WebAppInterface {
     public void showLeaderboard(String leaderboardId) {
         try {
             mMain.mLeaderboardId = leaderboardId;
-            mMain.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mMain.showLeaderboard(mMain.mLeaderboardId);
-                }
-            });
+            mMain.showLeaderboard(mMain.mLeaderboardId);
         } catch (Exception e) {
             showToast(e.toString());
         }
