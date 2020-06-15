@@ -34,7 +34,7 @@ public class WebAppInterface {
     /** AdMob Init */
     @JavascriptInterface
     public void adMobInit(String useJSCallbackYN) {
-        try {
+        /*try {
             if (useJSCallbackYN.equals("Y")) {
                 initialize(mContext, new OnInitializationCompleteListener() {
                     @Override
@@ -47,18 +47,21 @@ public class WebAppInterface {
             }
         } catch (Exception e) {
             showToast(e.toString());
+        }*/
+        if (useJSCallbackYN.equals("Y")) {
+           mMain.webView.loadUrl("javascript:AdMob.onInitComplete();");
         }
     }
     
     /** AdMob Init InterstitialAd */
     @JavascriptInterface
     public void adMobInitInterstitial(String adUnitId) {
-        try {
+        /*try {
             mMain.mInterstitialAd = new InterstitialAd(mContext);
             mMain.mInterstitialAd.setAdUnitId(adUnitId);
         } catch(Exception e) {
             showToast(e.toString());
-        }
+        }*/
     }
 
     /** AdMob Load InterstitialAd */
@@ -143,7 +146,7 @@ public class WebAppInterface {
     /** AdMob Create and show banner */
     @JavascriptInterface
     public void adMobInitBanner() {
-        try {
+        /*try {
             mMain.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -156,13 +159,13 @@ public class WebAppInterface {
             });
         } catch(Exception e) {
             showToast(e.toString());
-        }
+        }*/
     }
     
     /** Signin to google services from the web page */
     @JavascriptInterface
     public void GoogleSignIn_getClient() {
-        try {
+        /*try {
             // Create the client used to sign in to Google services.
             if (mMain.mGoogleSignInClient == null) {
                 //showToast("GoogleSignIn.getClient");
@@ -171,7 +174,7 @@ public class WebAppInterface {
             }
         } catch (Exception e) {
             showToast(e.toString());
-        }
+        }*/
     }
 
     /** Signin to google services from the web page */
@@ -189,16 +192,11 @@ public class WebAppInterface {
         }
     }
 
-    /** Signin to google services from the web page */
+    /** Signout from google services from the web page */
     @JavascriptInterface
-    public void signInSilently() {
+    public void signOutFromGS() {
         try {
-            mMain.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mMain.signInSilently();
-                }
-            });
+            mMain.signOut();
         } catch (Exception e) {
             showToast(e.toString());
         }

@@ -2,11 +2,13 @@ package com.pgmaru.common;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,9 +16,12 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.games.AchievementsClient;
 import com.google.android.gms.games.EventsClient;
@@ -29,6 +34,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+
+import static com.google.android.gms.ads.MobileAds.initialize;
 
 public class MainActivity extends AppCompatActivity {
   public WebView webView;
@@ -50,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
   private static final int RC_UNUSED = 5001;
   private static final int RC_SIGN_IN = 9001;
 
+  // achievements and scores we're pending to push to the cloud
+  // (waiting for the user to sign in, for instance)
+  private final AccomplishmentsOutbox mOutbox = new AccomplishmentsOutbox();
+
   public InterstitialAd mInterstitialAd;
 
   public String mLeaderboardId;
@@ -60,6 +71,25 @@ public class MainActivity extends AppCompatActivity {
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.activity_main);
 
+    //
+    // Google sign in
+    //
+    mGoogleSignInClient = GoogleSignIn.getClient(this,
+            new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build());
+
+    //
+    // Admob
+    //
+    initialize(this);
+    mInterstitialAd = new InterstitialAd(this);
+    mInterstitialAd.setAdUnitId(getString(R.string.admob_interstitial_unit_id));
+    AdView adView = (AdView)findViewById(R.id.adView);
+    AdRequest adRequest = new AdRequest.Builder().build();
+    adView.loadAd(adRequest);
+
+    //
+    // Webview
+    //
     webView = (WebView)findViewById(R.id.webView);
     WebSettings webSettings = webView.getSettings();
     webSettings.setJavaScriptEnabled(true);
@@ -72,14 +102,14 @@ public class MainActivity extends AppCompatActivity {
     webView.setWebViewClient(new WebViewClient());
   }
 
-  // Create AdMob Banner View
+  /*// Create AdMob Banner View
   public void initAdmobBanner() {
     AdView adView = (AdView)findViewById(R.id.adView);
     //adView.setAdSize(AdSize.BANNER);
     //adView.setAdUnitId(mAdUnitId);
     AdRequest adRequest = new AdRequest.Builder().build();
     adView.loadAd(adRequest);
-  }
+  }*/
   
   // Back button activity
   public void onBackPressed() {
@@ -151,6 +181,10 @@ public class MainActivity extends AppCompatActivity {
     webAppInterface.jscallback_gamerProfile("disconnected","");
   }
 
+  private boolean isSignedIn() {
+    return GoogleSignIn.getLastSignedInAccount(this) != null;
+  }
+
   public void signInSilently() {
     mGoogleSignInClient.silentSignIn().addOnCompleteListener(this,
       new OnCompleteListener<GoogleSignInAccount>() {
@@ -165,6 +199,9 @@ public class MainActivity extends AppCompatActivity {
       });
   }
 
+  public void startSignInIntent() {
+    startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
+  }
 
   @Override
   protected void onResume() {
@@ -178,9 +215,26 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  public void startSignInIntent() {
-    startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
+  public void signOut() {
+    //Log.d(TAG, "signOut()");
+
+    if (!isSignedIn()) {
+      //Log.w(TAG, "signOut() called, but was not signed in!");
+      return;
+    }
+
+    mGoogleSignInClient.signOut().addOnCompleteListener(this,
+            new OnCompleteListener<Void>() {
+              @Override
+              public void onComplete(@NonNull Task<Void> task) {
+                boolean successful = task.isSuccessful();
+                //Log.d(TAG, "signOut(): " + (successful ? "success" : "failed"));
+
+                onDisconnected();
+              }
+            });
   }
+
 
   public void showAchievements() {
     mAchievementsClient.getAchievementsIntent()
@@ -213,4 +267,22 @@ public class MainActivity extends AppCompatActivity {
         }
       });
   }
+
+  private class AccomplishmentsOutbox {
+    boolean mPrimeAchievement = false;
+    boolean mHumbleAchievement = false;
+    boolean mLeetAchievement = false;
+    boolean mArrogantAchievement = false;
+    int mBoredSteps = 0;
+    int mEasyModeScore = -1;
+    int mHardModeScore = -1;
+
+    boolean isEmpty() {
+      return !mPrimeAchievement && !mHumbleAchievement && !mLeetAchievement &&
+              !mArrogantAchievement && mBoredSteps == 0 && mEasyModeScore < 0 &&
+              mHardModeScore < 0;
+    }
+
+  }
+
 }
