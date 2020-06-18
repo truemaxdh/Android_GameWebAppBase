@@ -31,39 +31,6 @@ public class WebAppInterface {
         Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
     }
 
-    /** AdMob Init */
-    @JavascriptInterface
-    public void adMobInit(String useJSCallbackYN) {
-        /*try {
-            if (useJSCallbackYN.equals("Y")) {
-                initialize(mContext, new OnInitializationCompleteListener() {
-                    @Override
-                    public void onInitializationComplete(InitializationStatus initializationStatus) {
-                        mMain.webView.loadUrl("javascript:AdMob.onInitComplete();");
-                    }
-                });
-            } else {
-                initialize(mContext);
-            }
-        } catch (Exception e) {
-            showToast(e.toString());
-        }*/
-        if (useJSCallbackYN.equals("Y")) {
-           mMain.webView.loadUrl("javascript:AdMob.onInitComplete();");
-        }
-    }
-    
-    /** AdMob Init InterstitialAd */
-    @JavascriptInterface
-    public void adMobInitInterstitial(String adUnitId) {
-        /*try {
-            mMain.mInterstitialAd = new InterstitialAd(mContext);
-            mMain.mInterstitialAd.setAdUnitId(adUnitId);
-        } catch(Exception e) {
-            showToast(e.toString());
-        }*/
-    }
-
     /** AdMob Load InterstitialAd */
     @JavascriptInterface
     public void adMobInterstitialLoad() {
@@ -96,85 +63,6 @@ public class WebAppInterface {
         } catch(Exception e) {
             showToast(e.toString());
         }
-    }
-
-    /** AdMob Set Callbacks of InterstitialAd */
-    @JavascriptInterface
-    public void adMobInterstitialSetToUseJSCallback() {
-        try {
-            mMain.runOnUiThread(new Runnable() {
-                 @Override
-                public void run() {
-                    mMain.mInterstitialAd.setAdListener(new AdListener() {
-                        @Override
-                        public void onAdLoaded() {
-                            mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdLoaded();");
-                        }
-
-                        @Override
-                        public void onAdFailedToLoad(int errorCode) {
-                            mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdFailedToLoad();");
-                        }
-
-                        @Override
-                        public void onAdOpened() {
-                            mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdOpened();");
-                        }
-
-                        @Override
-                        public void onAdClicked() {
-                            mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdClicked();");
-                        }
-
-                        @Override
-                        public void onAdLeftApplication() {
-                            mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdLeftApplication();");
-                        }
-
-                        @Override
-                        public void onAdClosed() {
-                            mMain.webView.loadUrl("javascript:AdMob.Interstitial.onAdClosed();");
-                        }
-                    });
-                }
-            });
-        } catch (Exception e) {
-            showToast(e.toString());
-        }
-    }
-    
-    /** AdMob Create and show banner */
-    @JavascriptInterface
-    public void adMobInitBanner() {
-        /*try {
-            mMain.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        mMain.initAdmobBanner();
-                    } catch(Exception e) {
-                        showToast(e.toString());
-                    }
-                }
-            });
-        } catch(Exception e) {
-            showToast(e.toString());
-        }*/
-    }
-    
-    /** Signin to google services from the web page */
-    @JavascriptInterface
-    public void GoogleSignIn_getClient() {
-        /*try {
-            // Create the client used to sign in to Google services.
-            if (mMain.mGoogleSignInClient == null) {
-                //showToast("GoogleSignIn.getClient");
-                mMain.mGoogleSignInClient = GoogleSignIn.getClient(mContext,
-                        new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build());
-            }
-        } catch (Exception e) {
-            showToast(e.toString());
-        }*/
     }
 
     /** Signin to google services from the web page */
