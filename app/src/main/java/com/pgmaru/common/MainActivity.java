@@ -31,11 +31,16 @@ import com.google.android.gms.games.GamesClient;
 import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.games.Player;
 import com.google.android.gms.games.PlayersClient;
+import com.google.android.gms.games.achievement.Achievement;
 import com.google.android.gms.games.achievement.AchievementBuffer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import static com.google.android.gms.ads.MobileAds.initialize;
 
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
   public PlayersClient mPlayersClient;
   public GamesClient mGamesClient;
 
+  public String strJSONAchievements = "";
   
   private static final int RC_UNUSED = 5001;
   private static final int RC_SIGN_IN = 9001;
@@ -242,13 +248,15 @@ public class MainActivity extends AppCompatActivity {
       .addOnSuccessListener(new OnSuccessListener<AnnotatedData<AchievementBuffer>>() {
         @Override
         public void onSuccess(AnnotatedData<AchievementBuffer> achievementBufferAnnotatedData) {
-          webAppInterface.jscallback_loadAchievements(achievementBufferAnnotatedData.toString());
+          strJSONAchievements = achievementsToJSONArray(achievementBufferAnnotatedData.get()).toString();
+          webAppInterface.jscallback_loadAchievements(strJSONAchievements);
         }
       })
       .addOnFailureListener(new OnFailureListener() {
         @Override
         public void onFailure(@NonNull Exception e) {
           webAppInterface.showToast("loadAchievements failed");
+          webAppInterface.jscallback_loadAchievements(strJSONAchievements);
         }
       });
   }
@@ -283,6 +291,33 @@ public class MainActivity extends AppCompatActivity {
           webAppInterface.showToast("getAllLeaderboardsIntent failed");
         }
       });
+  }
+
+  public static JSONArray achievementsToJSONArray(AchievementBuffer buffer ) {
+    JSONArray result = new JSONArray();
+    int bufSize = buffer.getCount();
+    for( int i = 0; i < bufSize; i++ ) {
+      Achievement achievement = buffer.get( i );
+      JSONObject json = new JSONObject();
+      try {
+        json.put( "AchievementId", achievement.getAchievementId() );
+        json.put( "State", achievement.getState() );
+        json.put( "Type", achievement.getType() );
+        json.put( "Description", achievement.getDescription() );
+        json.put( "Name", achievement.getName() );
+        /* Is incremental */
+        if( achievement.getType() == Achievement.TYPE_INCREMENTAL ) {
+          json.put( "CurrentSteps", achievement.getCurrentSteps() );
+          json.put( "TotalSteps", achievement.getTotalSteps() );
+        }
+
+        result.put( json.toString() );
+      } catch( JSONException e ) {
+        e.printStackTrace();
+      }
+    }
+    buffer.release();
+    return result;
   }
 
   private class AccomplishmentsOutbox {
