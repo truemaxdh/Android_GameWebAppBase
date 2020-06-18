@@ -254,6 +254,16 @@ public class WebAppInterface {
         }
     }
 
+    /** Load Accomplished Achievement from the web page */
+    @JavascriptInterface
+    public void loadAchievements() {
+        try {
+            mMain.loadAchievements();
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
+    }
+
     /** Submit Score from the web page */
     @JavascriptInterface
     public void submitScore(String leaderboardId, int score) {
@@ -297,4 +307,12 @@ public class WebAppInterface {
         }
     }
 
+
+    public void jscallback_loadAchievements(String strAchievements) {
+        try {
+            mMain.webView.loadUrl("javascript:setAchievements('" + strAchievements + "');");
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
+    }
 }

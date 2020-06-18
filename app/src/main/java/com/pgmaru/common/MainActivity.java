@@ -24,12 +24,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.games.AchievementsClient;
+import com.google.android.gms.games.AnnotatedData;
 import com.google.android.gms.games.EventsClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.GamesClient;
 import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.games.Player;
 import com.google.android.gms.games.PlayersClient;
+import com.google.android.gms.games.achievement.AchievementBuffer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -235,6 +237,21 @@ public class MainActivity extends AppCompatActivity {
             });
   }
 
+  public void loadAchievements() {
+    mAchievementsClient.load(true)
+      .addOnSuccessListener(new OnSuccessListener<AnnotatedData<AchievementBuffer>>() {
+        @Override
+        public void onSuccess(AnnotatedData<AchievementBuffer> achievementBufferAnnotatedData) {
+          webAppInterface.jscallback_loadAchievements(achievementBufferAnnotatedData.toString());
+        }
+      })
+      .addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(@NonNull Exception e) {
+          webAppInterface.showToast("loadAchievements failed");
+        }
+      });
+  }
 
   public void showAchievements() {
     mAchievementsClient.getAchievementsIntent()
