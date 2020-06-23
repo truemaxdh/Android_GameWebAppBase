@@ -92,17 +92,20 @@ public class WebAppInterface {
 
     /** get Last SignedIn Account to google services from the web page */
     @JavascriptInterface
-    public String getLastSignedInAccount() {
+    public void reqGamerProfile() {
+        String isConnected = "disconnected";
         String dispName = "";
         try {
             GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(mContext);
-            if (gsa != null)
+            if (gsa != null) {
                 dispName = gsa.getDisplayName();
+                isConnected = "connected";
+            }
         } catch(Exception e) {
             showToast(e.toString());
         }
         //showToast(dispName);
-        return dispName;
+        jscallback_gamerProfile(isConnected, dispName);
     }
 
     /** Show achievements from the web page */
@@ -148,7 +151,8 @@ public class WebAppInterface {
         try {
             mMain.loadAchievements();
         } catch (Exception e) {
-            showToast(e.toString());
+            //showToast(e.toString());
+            jscallback_loadAchievements("");
         }
     }
 
