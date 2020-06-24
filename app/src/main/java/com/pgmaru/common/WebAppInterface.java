@@ -93,19 +93,31 @@ public class WebAppInterface {
     /** get Last SignedIn Account to google services from the web page */
     @JavascriptInterface
     public void reqGamerProfile() {
-        String isConnected = "disconnected";
-        String dispName = "";
         try {
-            GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(mContext);
-            if (gsa != null) {
-                dispName = gsa.getDisplayName();
-                isConnected = "connected";
-            }
+            mMain.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    String isConnected = "disconnected";
+                    String dispName = "";
+                    try {
+                        GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(mContext);
+                        if (gsa != null) {
+                            dispName = gsa.getDisplayName();
+                            isConnected = "connected";
+                        }
+                    } catch(Exception e) {
+                        showToast(e.toString());
+                    }
+                    //showToast(dispName);
+                    jscallback_gamerProfile(isConnected, dispName);
+                }
+            });
         } catch(Exception e) {
             showToast(e.toString());
         }
-        //showToast(dispName);
-        jscallback_gamerProfile(isConnected, dispName);
+        
+        
+        
     }
 
     /** Show achievements from the web page */
