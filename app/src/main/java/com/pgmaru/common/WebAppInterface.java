@@ -195,6 +195,16 @@ public class WebAppInterface {
         }
     }
 
+    /** Vibrate from the web page */
+    @JavascriptInterface
+    public void vibrate(int millisec) {
+        try {
+            mMain.vibrate(millisec);
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
+    }
+
     public void showSubMenu() {
         try {
             mMain.webView.loadUrl("javascript:showSubMenu();");

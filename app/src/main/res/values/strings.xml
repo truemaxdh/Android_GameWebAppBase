@@ -6,6 +6,7 @@
     <string name="http_url">https://truemaxdh.github.io/EnjoyCoding/game_pentix/www/</string>
     <string name="admob_banner_unit_id">ca-app-pub-7307479428475282/6870451218</string>
     <string name="admob_interstitial_unit_id">ca-app-pub-7307479428475282/1949829859</string>
+    <string name="setting_keep_screen_on">0</string>
 </resources>-->
 
 
@@ -17,15 +18,17 @@
     <string name="http_url">https://truemaxdh.github.io/EnjoyCoding/game_shooting/www/</string>
     <string name="admob_banner_unit_id">ca-app-pub-7307479428475282/9964016821</string>
     <string name="admob_interstitial_unit_id">ca-app-pub-7307479428475282/1960854989</string>
+    <string name="setting_keep_screen_on">0</string>
 </resources>-->
 
 
 <!-- Meteorite Defense -->
 <resources>
     <string name="app_name">MeteoriteDefense</string>
-    <string name="app_id" translatable="false">816297656629</string>
+    <string name="app_id" translatable="false">298664676102</string>
     <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="http_url">https://truemaxdh.github.io/EnjoyCoding/game_meteorite_defense/www/</string>
     <string name="admob_banner_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="admob_interstitial_unit_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="setting_keep_screen_on">0</string>
 </resources>

@@ -1,9 +1,12 @@
 package com.pgmaru.common;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -45,6 +48,8 @@ import org.json.JSONObject;
 import static com.google.android.gms.ads.MobileAds.initialize;
 
 public class MainActivity extends AppCompatActivity {
+  final Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+
   public WebView webView;
   public String mAchievementId;
   public int mScore;
@@ -78,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.activity_main);
+    if (getString(R.string.setting_keep_screen_on).equals("1")) {
+      getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
 
     //
     // Google sign in
@@ -337,4 +345,12 @@ public class MainActivity extends AppCompatActivity {
 
   }
 
+
+  /**
+   * vibrate
+   * @param millisec
+   */
+  public void vibrate(int millisec) {
+    vibrator.vibrate(millisec);
+  }
 }
