@@ -48,8 +48,6 @@ import org.json.JSONObject;
 import static com.google.android.gms.ads.MobileAds.initialize;
 
 public class MainActivity extends AppCompatActivity {
-  final Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-
   public WebView webView;
   public String mAchievementId;
   public int mScore;
@@ -351,6 +349,7 @@ public class MainActivity extends AppCompatActivity {
    * @param millisec
    */
   public void vibrate(int millisec) {
-    vibrator.vibrate(millisec);
+    Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+    vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
   }
 }
