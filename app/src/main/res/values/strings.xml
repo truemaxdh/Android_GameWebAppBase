@@ -26,9 +26,22 @@
 <resources>
     <string name="app_name">MeteoriteDefense</string>
     <string name="app_id" translatable="false">298664676102</string>
-    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_app_id">ca-app-pub-7307479428475282~5185708451</string>
     <string name="http_url">https://truemaxdh.github.io/EnjoyCoding/game_meteorite_defense/www/</string>
+    <string name="admob_banner_unit_id">ca-app-pub-7307479428475282/1295399057</string>
+    <string name="admob_interstitial_unit_id">ca-app-pub-7307479428475282/6136662194</string>
+    <string name="setting_keep_screen_on">0</string>
+</resources>
+
+
+<!-- TestAds -->
+<!--
+<resources>
+    <string name="app_name">TestAds</string>
+    <string name="app_id" translatable="false">00000000</string>
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="http_url">____</string>
     <string name="admob_banner_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="admob_interstitial_unit_id">ca-app-pub-3940256099942544/1033173712</string>
     <string name="setting_keep_screen_on">0</string>
-</resources>
+</resources>-->
