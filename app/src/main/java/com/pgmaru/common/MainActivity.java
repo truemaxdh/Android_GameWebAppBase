@@ -2,7 +2,9 @@ package com.pgmaru.common;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.Window;
@@ -350,6 +352,10 @@ public class MainActivity extends AppCompatActivity {
    */
   public void vibrate(int millisec) {
     Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-    vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      vibrator.vibrate(VibrationEffect.createOneShot(millisec, VibrationEffect.DEFAULT_AMPLITUDE));
+    } else {
+      vibrator.vibrate(millisec);
+    }
   }
 }
