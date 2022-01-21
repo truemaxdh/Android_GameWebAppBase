@@ -22,7 +22,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_app_id"/>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

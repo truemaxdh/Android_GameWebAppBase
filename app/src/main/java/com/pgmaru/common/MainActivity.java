@@ -20,7 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -97,10 +99,25 @@ public class MainActivity extends AppCompatActivity {
     // Admob
     //
     initialize(this);
-    mInterstitialAd = new InterstitialAd(this);
-    mInterstitialAd.setAdUnitId(getString(R.string.admob_interstitial_unit_id));
-    AdView adView = (AdView)findViewById(R.id.adView);
     AdRequest adRequest = new AdRequest.Builder().build();
+    InterstitialAd.load(
+            this,
+            getString(R.string.admob_interstitial_unit_id),
+            adRequest,
+            new InterstitialAdLoadCallback() {
+              @Override
+              public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                mInterstitialAd = interstitialAd;
+              }
+
+              @Override
+              public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                mInterstitialAd = null;
+              }
+            });
+    //mInterstitialAd =  new InterstitialAd(this);
+    //mInterstitialAd.setAdUnitId(getString(R.string.admob_interstitial_unit_id));
+    AdView adView = (AdView)findViewById(R.id.adView);
     adView.loadAd(adRequest);
 
     //
@@ -109,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
     webView = (WebView)findViewById(R.id.webView);
     WebSettings webSettings = webView.getSettings();
     webSettings.setJavaScriptEnabled(true);
+    webSettings.setDomStorageEnabled(true);
 
     webAppInterface = new WebAppInterface(this);
     webView.addJavascriptInterface(webAppInterface, "Android");
