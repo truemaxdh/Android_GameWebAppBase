@@ -100,44 +100,7 @@ public class MainActivity extends AppCompatActivity {
     //
     initialize(this);
     AdRequest adRequest = new AdRequest.Builder().build();
-    InterstitialAd.load(
-            this,
-            getString(R.string.admob_interstitial_unit_id),
-            adRequest,
-            new InterstitialAdLoadCallback() {
-              @Override
-              public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                mInterstitialAd = interstitialAd;
-              }
-
-              @Override
-              public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                mInterstitialAd = null;
-              }
-            });
     
-    mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
-      @Override
-      public void onAdDismissedFullScreenContent() {
-        // Called when fullscreen content is dismissed.
-        //Log.d("TAG", "The ad was dismissed.");
-      }
-
-      @Override
-      public void onAdFailedToShowFullScreenContent(AdError adError) {
-        // Called when fullscreen content failed to show.
-        //Log.d("TAG", "The ad failed to show.");
-      }
-
-      @Override
-      public void onAdShowedFullScreenContent() {
-        // Called when fullscreen content is shown.
-        // Make sure to set your reference to null so you don't
-        // show it a second time.
-        mInterstitialAd = null;
-        //Log.d("TAG", "The ad was shown.");
-      }
-    });
     //mInterstitialAd =  new InterstitialAd(this);
     //mInterstitialAd.setAdUnitId(getString(R.string.admob_interstitial_unit_id));
     AdView adView = (AdView)findViewById(R.id.adView);
