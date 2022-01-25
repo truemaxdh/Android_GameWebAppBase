@@ -34,16 +34,71 @@ public class WebAppInterface {
     /** AdMob Load InterstitialAd */
     @JavascriptInterface
     public void adMobInterstitialLoad() {
-        /*try {
+        try {
             mMain.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mMain.mInterstitialAd.l.loadAd(new AdRequest.Builder().build());
+                  //mMain.mInterstitialAd.l.loadAd(new AdRequest.Builder().build());
+                  InterstitialAd.load(
+                    mMain,
+                    getString(R.string.admob_interstitial_unit_id),
+                    mMain.adRequest,
+                    new InterstitialAdLoadCallback() {
+                      @Override
+                      public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mMain.mInterstitialAd = interstitialAd;
+                        //Log.i(TAG, "onAdLoaded");
+                        //Toast.makeText(MyActivity.this, "onAdLoaded()", Toast.LENGTH_SHORT).show();
+                        interstitialAd.setFullScreenContentCallback(
+                            new FullScreenContentCallback() {
+                              @Override
+                              public void onAdDismissedFullScreenContent() {
+                                // Called when fullscreen content is dismissed.
+                                // Make sure to set your reference to null so you don't
+                                // show it a second time.
+                                mMain.mInterstitialAd = null;
+                                //Log.d("TAG", "The ad was dismissed.");
+                              }
+
+                              @Override
+                              public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                // Called when fullscreen content failed to show.
+                                // Make sure to set your reference to null so you don't
+                                // show it a second time.
+                                mMain.mInterstitialAd = null;
+                                //Log.d("TAG", "The ad failed to show.");
+                              }
+
+                              @Override
+                              public void onAdShowedFullScreenContent() {
+                                // Called when fullscreen content is shown.
+                                //Log.d("TAG", "The ad was shown.");
+                              }
+                            });
+                      }
+
+                      @Override
+                      public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        //Log.i(TAG, loadAdError.getMessage());
+                        mMain.mInterstitialAd = null;
+
+                        /*String error =
+                            String.format(
+                                "domain: %s, code: %d, message: %s",
+                                loadAdError.getDomain(), loadAdError.getCode(), loadAdError.getMessage());
+                        Toast.makeText(
+                                MyActivity.this, "onAdFailedToLoad() with error: " + error, Toast.LENGTH_SHORT)
+                            .show();*/
+                      }
+                    });
                 }
             });
         } catch(Exception e) {
             showToast(e.toString());
-        }*/
+        }
     }
 
     /** AdMob Show InterstitialAd */
@@ -54,10 +109,17 @@ public class WebAppInterface {
                 @Override
                 public void run() {
                 //if (mMain.mInterstitialAd..isLoaded()) {
-                    mMain.mInterstitialAd.show(mMain);
+                    //mMain.mInterstitialAd.show(mMain);
                 //} else {
                     //showToast("The interstitial wasn't loaded yet.");
                 //}
+                  // Show the ad if it's ready. Otherwise toast and restart the game.
+                  if (mMain.mInterstitialAd != null) {
+                    mMain.mInterstitialAd.show(mMain);
+                  } else {
+                      //Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
+                      //startGame();
+                  }
                 }
             });
         } catch(Exception e) {
